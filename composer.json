@@ -1,0 +1,50 @@
+{
+    "name": "dskripchenko/laravel-admin-media",
+    "description": "Расширенная медиа-библиотека (коллекции, теги, focal-point, responsive-варианты) для dskripchenko/laravel-admin.",
+    "license": "MIT",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Denis Skripchenko",
+            "email": "denskrp90@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^8.5",
+        "ext-gd": "*",
+        "dskripchenko/laravel-admin": "^1.0"
+    },
+    "require-dev": {
+        "larastan/larastan": "^3.0",
+        "laravel/pint": "^1.18",
+        "orchestra/testbench": "^10.0",
+        "phpstan/phpstan": "^2.0",
+        "phpunit/phpunit": "^11.0"
+    },
+    "suggest": {
+        "intervention/image": "Расширенный image processing (advanced filters, watermarks)",
+        "ext-imagick": "Альтернатива GD с лучшим качеством и поддержкой большего числа форматов"
+    },
+    "autoload": {
+        "psr-4": {
+            "Dskripchenko\\LaravelAdminMedia\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Dskripchenko\\LaravelAdminMedia\\Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Dskripchenko\\LaravelAdminMedia\\AdminMediaServiceProvider"
+            ]
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
