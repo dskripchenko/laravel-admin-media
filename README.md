@@ -1,13 +1,33 @@
 # dskripchenko/laravel-admin-media
 
-Расширенная медиа-библиотека для `dskripchenko/laravel-admin`: коллекции, теги, focal-point, responsive-варианты, EXIF-стрипинг.
+> 🌐 **English** · [Русский](README.ru.md) · [Deutsch](README.de.md) · [中文](README.zh.md)
 
-Полная спецификация: [../../docs/sister-packs/media.md](../../docs/sister-packs/media.md).
+Extended media library: collections, tags, focal-point, responsive variants, EXIF stripping. No spatie/medialibrary dependency.
 
-## Статус
+A sister-pack for [`dskripchenko/laravel-admin`](https://github.com/dskripchenko/laravel-admin).
 
-Локальный dev (монорепо). Перед релизом — отдельный репозиторий.
+[![Packagist](https://img.shields.io/packagist/v/dskripchenko/laravel-admin-media)](https://packagist.org/packages/dskripchenko/laravel-admin-media)
+[![License](https://img.shields.io/packagist/l/dskripchenko/laravel-admin-media)](LICENSE)
 
-## Лицензия
+## Install
 
-MIT.
+```bash
+composer require dskripchenko/laravel-admin-media
+php artisan migrate
+```
+
+The plugin auto-registers via Laravel package discovery. To publish the
+config:
+
+```bash
+php artisan vendor:publish --tag=media-config
+```
+
+## Documentation
+
+- [Getting started](docs/en/getting-started.md)
+- [Usage](docs/en/usage.md)
+
+## License
+
+[MIT](LICENSE) © Denis Skripchenko
