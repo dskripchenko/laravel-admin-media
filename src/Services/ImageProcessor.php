@@ -65,7 +65,7 @@ final class ImageProcessor
             $height = (int) round($width / $aspect);
         } elseif ($height !== null && $width === null) {
             $width = (int) round($height * $aspect);
-        } elseif ($width === null && $height === null) {
+        } elseif ($width === null) {
             imagedestroy($src);
 
             return false;
