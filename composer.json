@@ -1,6 +1,6 @@
 {
     "name": "dskripchenko/laravel-admin-media",
-    "description": "Расширенная медиа-библиотека (коллекции, теги, focal-point, responsive-варианты) для dskripchenko/laravel-admin.",
+    "description": "Extended media library (collections, tags, focal point, responsive variants) for dskripchenko/laravel-admin.",
     "type": "library",
     "keywords": [
         "laravel",
