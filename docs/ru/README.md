@@ -5,7 +5,7 @@
 
 Расширенная медиа-библиотека для `dskripchenko/laravel-admin`: коллекции, теги, focal-point, responsive-варианты, EXIF-стрипинг.
 
-Полная спецификация: [laravel-admin/docs/sister-packs/media.md](https://github.com/dskripchenko/laravel-admin/blob/main/docs/sister-packs/media.md).
+Полная спецификация: [laravel-admin/docs/ru/sister-packs/media.md](https://github.com/dskripchenko/laravel-admin/blob/main/docs/ru/sister-packs/media.md).
 
 ## Статус
 
