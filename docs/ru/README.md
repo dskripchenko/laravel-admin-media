@@ -1,11 +1,11 @@
 # dskripchenko/laravel-admin-media
 
-> 🌐 [English](README.md) · **Русский** · [Deutsch](README.de.md) · [中文](README.zh.md)
+> 🌐 [English](../../README.md) · **Русский** · [Deutsch](../de/README.md) · [中文](../zh/README.md)
 
 
 Расширенная медиа-библиотека для `dskripchenko/laravel-admin`: коллекции, теги, focal-point, responsive-варианты, EXIF-стрипинг.
 
-Полная спецификация: [../../docs/sister-packs/media.md](../../docs/sister-packs/media.md).
+Полная спецификация: [laravel-admin/docs/sister-packs/media.md](https://github.com/dskripchenko/laravel-admin/blob/main/docs/sister-packs/media.md).
 
 ## Статус
 

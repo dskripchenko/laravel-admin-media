@@ -1,6 +1,6 @@
 # dskripchenko/laravel-admin-media
 
-> 🌐 **English** · [Русский](README.ru.md) · [Deutsch](README.de.md) · [中文](README.zh.md)
+> 🌐 **English** · [Русский](docs/ru/README.md) · [Deutsch](docs/de/README.md) · [中文](docs/zh/README.md)
 
 Extended media library: collections, tags, focal-point, responsive variants, EXIF stripping. No spatie/medialibrary dependency.
 
