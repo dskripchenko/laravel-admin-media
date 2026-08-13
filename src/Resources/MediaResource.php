@@ -15,12 +15,12 @@ use Dskripchenko\LaravelAdminMedia\Models\Media;
 use Illuminate\Database\Eloquent\Builder;
 
 /**
- * Browse-страница media-библиотеки.
+ * The browse page of the media library.
  *
  * Permissions: admin.media.{view,update,delete}.
  *
- * Upload отдельным endpoint'ом (см. UploadController) — Resource на изменения
- * только редактирование metadata (alt/title/tags/focal-point).
+ * Uploading goes through a separate endpoint (see UploadController) — as far as
+ * changes go, the resource only edits the metadata (alt/title/tags/focal point).
  */
 final class MediaResource extends Resource
 {

@@ -11,23 +11,24 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 /**
- * Высокоуровневый сервис для upload + variant-generation.
+ * The high-level service for uploads and variant generation.
  *
- * Upload алгоритм:
- *   1. Validate mime & size (через config)
- *   2. Хранение оригинала на диске (config disk + path-prefix)
- *   3. Создание Media record (со width/height извлечёнными из image-info)
- *   4. Генерация variants по responsive_set'у (если задан) — синхронно;
- *      production-host подменяет на queued-job
+ * The upload algorithm:
+ *   1. Validate the mime and the size (from the config)
+ *   2. Store the original on the disk (the config's disk plus a path prefix)
+ *   3. Create the Media record (with the width and height taken from the image
+ *      info)
+ *   4. Generate the variants of the responsive set (when one is given) —
+ *      synchronously; a production host swaps this for a queued job
  */
 final class MediaService
 {
     public function __construct(private readonly ImageProcessor $images) {}
 
     /**
-     * Загрузить файл в media-library.
+     * Upload a file into the media library.
      *
-     * @param  array<string, mixed>  $extraAttributes  Дополнительные поля Media
+     * @param  array<string, mixed>  $extraAttributes  The extra Media fields
      *                                                 (alt, title, description,
      *                                                 tags, collection,
      *                                                 uploader_id).
@@ -67,7 +68,7 @@ final class MediaService
     }
 
     /**
-     * Сгенерировать variants по конфигу `admin-media.responsive_sets.{set}`.
+     * Generate the variants from the `admin-media.responsive_sets.{set}` config.
      */
     public function generateVariants(Media $media, string $setName): int
     {

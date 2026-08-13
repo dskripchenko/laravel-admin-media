@@ -15,8 +15,8 @@ use Illuminate\Http\Request;
  * Form-data:
  *   - file (required, single file)
  *   - collection (string, default 'default')
- *   - responsive_set (string, optional — генерирует variants по
- *     `admin-media.responsive_sets.{set}` синхронно)
+ *   - responsive_set (string, optional — generates the variants from
+ *     `admin-media.responsive_sets.{set}` synchronously)
  *   - alt / title / description / tags[] (optional)
  */
 final class UploadController extends ApiController

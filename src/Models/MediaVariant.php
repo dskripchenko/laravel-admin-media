@@ -43,7 +43,7 @@ final class MediaVariant extends Model
     }
 
     /**
-     * Public URL variant'а. Использует disk родительской media.
+     * The variant's public URL. It uses the parent media's disk.
      */
     protected function url(): Attribute
     {

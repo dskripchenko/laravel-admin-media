@@ -7,21 +7,21 @@ namespace Dskripchenko\LaravelAdminMedia\Services;
 use RuntimeException;
 
 /**
- * Минимальный image-processor поверх GD.
+ * A minimal image processor on top of GD.
  *
- * Поддерживает: read JPEG/PNG/GIF/WebP, resize-to-width-or-height,
- * crop с focal-point, save в JPEG/PNG/WebP. EXIF-strip автоматически
- * (GD не пишет EXIF при save'е).
+ * It supports: reading JPEG/PNG/GIF/WebP, resizing to a width or a height,
+ * cropping with a focal point, saving as JPEG/PNG/WebP. The EXIF is stripped
+ * automatically (GD does not write EXIF on save).
  *
- * Для расширенного feature-set'а (AVIF / watermarks / advanced filters)
- * — установить intervention/image и подменить bindings в SP.
+ * For a wider feature set (AVIF / watermarks / advanced filters) install
+ * intervention/image and swap the bindings in the service provider.
  */
 final class ImageProcessor
 {
     private const SUPPORTED_INPUT = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
 
     /**
-     * Прочитать image-info: width / height / mime.
+     * Read the image info: width / height / mime.
      *
      * @return array{width: int, height: int, mime: string}|null
      */
@@ -43,10 +43,10 @@ final class ImageProcessor
     }
 
     /**
-     * Resize изображения по width (если задан) или height (если задан).
-     * Не оба сразу — для box-fit (с crop'ом) используйте `crop()`.
+     * Resize the image by width (when given) or by height (when given). Not both
+     * at once — for a box fit (with a crop) use `crop()`.
      *
-     * @param  int  $quality  0..100 для JPEG/WebP
+     * @param  int  $quality  0..100, for JPEG/WebP
      */
     public function resize(string $sourcePath, string $targetPath, ?int $width, ?int $height, ?string $format = null, int $quality = 85): bool
     {
@@ -78,7 +78,7 @@ final class ImageProcessor
             return false;
         }
 
-        // Сохраняем прозрачность для PNG/WebP.
+        // Preserve the transparency for PNG/WebP.
         imagealphablending($dst, false);
         imagesavealpha($dst, true);
 
@@ -92,11 +92,11 @@ final class ImageProcessor
     }
 
     /**
-     * Crop с focal-point ($fx, $fy ∈ [0, 1]).
+     * A crop with a focal point ($fx, $fy ∈ [0, 1]).
      *
-     * Окно определяется так, чтобы focal-point остался внутри после
-     * обрезки до размеров $width × $height. Если focal слишком близко к
-     * краю — окно прижимается к нему.
+     * The window is chosen so that the focal point stays inside after the crop
+     * to $width × $height. When the focal point is too close to an edge, the
+     * window is pressed against it.
      */
     public function cropToBox(
         string $sourcePath,
@@ -122,13 +122,13 @@ final class ImageProcessor
         $dstAspect = $width / $height;
 
         if ($srcAspect > $dstAspect) {
-            // Source шире — crop по горизонтали
+            // The source is wider — crop horizontally
             $cropH = $info['height'];
             $cropW = (int) round($cropH * $dstAspect);
             $cropY = 0;
             $cropX = (int) round(($info['width'] - $cropW) * $fx);
         } else {
-            // Source выше — crop по вертикали
+            // The source is taller — crop vertically
             $cropW = $info['width'];
             $cropH = (int) round($cropW / $dstAspect);
             $cropX = 0;
@@ -172,7 +172,7 @@ final class ImageProcessor
 
     private function save(\GdImage $img, string $targetPath, string $format, int $quality): bool
     {
-        // Format может быть mime ('image/jpeg') либо short ('jpg'/'webp').
+        // The format may be a mime ('image/jpeg') or a short one ('jpg'/'webp').
         $shortFormat = match (true) {
             str_contains($format, 'jpeg') || str_contains($format, 'jpg') => 'jpeg',
             str_contains($format, 'png') => 'png',

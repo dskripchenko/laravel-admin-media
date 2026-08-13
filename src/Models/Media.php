@@ -49,7 +49,7 @@ final class Media extends Model
     ];
 
     /**
-     * Все variants (thumb / w-768 / etc).
+     * Every variant (thumb / w-768 and so on).
      *
      * @return HasMany<MediaVariant, $this>
      */
@@ -59,7 +59,7 @@ final class Media extends Model
     }
 
     /**
-     * Public URL оригинала через Storage.
+     * The public URL of the original, through Storage.
      */
     protected function url(): Attribute
     {
@@ -67,7 +67,7 @@ final class Media extends Model
     }
 
     /**
-     * Тип media по MIME.
+     * The media type, from the MIME.
      */
     protected function kind(): Attribute
     {
@@ -91,7 +91,7 @@ final class Media extends Model
     }
 
     /**
-     * Получить variant по имени либо null.
+     * Get a variant by name, or null.
      */
     public function variant(string $name): ?MediaVariant
     {

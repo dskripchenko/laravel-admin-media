@@ -30,7 +30,7 @@ final class MediaModelTest extends TestCase
 
     public function test_url_uses_disk(): void
     {
-        // Сохраняем чтобы Storage::disk нормально работал
+        // We save it so that Storage::disk works properly
         $media = Media::create([
             'disk' => 'media-test',
             'path' => 'media/2026/01/test.jpg',

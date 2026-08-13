@@ -9,8 +9,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 /**
- * Pivot между Media и любой моделью через morph (одна Media в нескольких
- * записях с разными role + position).
+ * The pivot between Media and any model through a morph (one Media in several
+ * rows with different roles and positions).
  *
  * @property int $id
  * @property int $media_id
