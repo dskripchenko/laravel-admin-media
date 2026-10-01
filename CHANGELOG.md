@@ -8,6 +8,27 @@ and this project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 Entries for releases published before this file existed were reconstructed from
 the tagged commit history.
 
+## [1.4.0] — 2026-10-01
+
+### Changed
+- `AdminMediaPlugin::version()` now reports the installed package version
+  (via `Composer\InstalledVersions`) instead of a hardcoded `0.1.0`; falls back
+  to `dev` when the version cannot be resolved.
+- Minimum supported `dskripchenko/laravel-admin` raised to `^1.30`.
+- Composer `suggest` descriptions translated to English.
+
+### Added
+- English translations of the admin UI strings (`resources/lang/en.json`),
+  loaded through Laravel JSON translations; hosts can override them with their
+  own `lang/{locale}.json`.
+- Weekly scheduled CI run to catch upstream dependency breakage.
+
+### Fixed
+- Documentation referred to a non-existent `media-config` publish tag; the
+  correct tag is `admin-media-config`.
+- Getting-started guide pointed to `config/media.php` and `/admin/r/media`;
+  corrected to `config/admin-media.php` and `/admin/r/media-library`.
+
 ## [v1.3.0] - 2026-07-20
 
 ### Changed

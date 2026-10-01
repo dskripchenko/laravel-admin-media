@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Dskripchenko\LaravelAdminMedia;
 
+use Composer\InstalledVersions;
 use Dskripchenko\LaravelAdmin\Admin;
 use Dskripchenko\LaravelAdmin\Permission\ItemPermission;
 use Dskripchenko\LaravelAdmin\Plugin\AdminPlugin;
@@ -18,7 +19,7 @@ final class AdminMediaPlugin implements AdminPlugin
 
     public function version(): string
     {
-        return '0.1.0';
+        return InstalledVersions::getPrettyVersion('dskripchenko/laravel-admin-media') ?? 'dev';
     }
 
     public function register(): void {}
@@ -28,12 +29,12 @@ final class AdminMediaPlugin implements AdminPlugin
         $admin->resources([MediaResource::class]);
 
         $admin->permissions(
-            ItemPermission::group('Медиа')
-                ->addPermission('admin.media.view', 'Просмотр библиотеки')
-                ->addPermission('admin.media.upload', 'Загрузка')
-                ->addPermission('admin.media.update', 'Редактирование (alt, title, focal)')
-                ->addPermission('admin.media.delete', 'Удаление')
-                ->addPermission('admin.media.collections.manage', 'Управление коллекциями'),
+            ItemPermission::group((string) __('Медиа'))
+                ->addPermission('admin.media.view', (string) __('Просмотр библиотеки'))
+                ->addPermission('admin.media.upload', (string) __('Загрузка'))
+                ->addPermission('admin.media.update', (string) __('Редактирование (alt, title, focal)'))
+                ->addPermission('admin.media.delete', (string) __('Удаление'))
+                ->addPermission('admin.media.collections.manage', (string) __('Управление коллекциями')),
         );
     }
 }

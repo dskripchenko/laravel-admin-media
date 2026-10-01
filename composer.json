@@ -27,7 +27,7 @@
     "require": {
         "php": "^8.2",
         "ext-gd": "*",
-        "dskripchenko/laravel-admin": "^1.7"
+        "dskripchenko/laravel-admin": "^1.30"
     },
     "require-dev": {
         "larastan/larastan": "^3.0",
@@ -37,8 +37,8 @@
         "phpunit/phpunit": "^11.0 || ^12.0"
     },
     "suggest": {
-        "intervention/image": "Расширенный image processing (advanced filters, watermarks)",
-        "ext-imagick": "Альтернатива GD с лучшим качеством и поддержкой большего числа форматов"
+        "intervention/image": "Advanced image processing (filters, watermarks)",
+        "ext-imagick": "Alternative to GD with better quality and support for more formats"
     },
     "autoload": {
         "psr-4": {

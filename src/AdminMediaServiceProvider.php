@@ -20,6 +20,12 @@ final class AdminMediaServiceProvider extends ServiceProvider
         $this->app->singleton(ImageProcessor::class);
         $this->app->singleton(MediaService::class);
 
+        // Strings are keyed by their Russian source text; a host may override
+        // them with its own lang/{locale}.json. Registered in register() so the
+        // path is known before the core boots plugins (which already translate
+        // permission labels).
+        $this->loadJsonTranslationsFrom(__DIR__.'/../resources/lang');
+
         $this->registerAdminPlugin(AdminMediaPlugin::class);
     }
 
