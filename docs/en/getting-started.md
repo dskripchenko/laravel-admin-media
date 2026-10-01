@@ -19,15 +19,15 @@ php artisan migrate
 ## Configure
 
 ```bash
-php artisan vendor:publish --tag=media-config
+php artisan vendor:publish --tag=admin-media-config
 ```
 
-Edit `config/media.php`.
+Edit `config/admin-media.php`.
 
 
 ## What it adds
 
-`/admin/r/media` — global library across all collections.
+`/admin/r/media-library` — global library across all collections.
 `MediaUploadField` — replace the default `FileUpload` in any
 Resource:
 

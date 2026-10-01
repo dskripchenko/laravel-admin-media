@@ -20,7 +20,7 @@ The plugin auto-registers via Laravel package discovery. To publish the
 config:
 
 ```bash
-php artisan vendor:publish --tag=media-config
+php artisan vendor:publish --tag=admin-media-config
 ```
 
 ## Documentation

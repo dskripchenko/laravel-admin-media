@@ -42,17 +42,17 @@ final class MediaResource extends Resource
 
     public static function label(): string
     {
-        return 'Медиа-библиотека';
+        return (string) __('Медиа-библиотека');
     }
 
     public function fields(): array
     {
         return [
-            Input::make('alt')->title('Alt-текст'),
-            Input::make('title')->title('Заголовок'),
-            Textarea::make('description')->title('Описание'),
-            TagsInput::make('tags')->title('Теги'),
-            Input::make('collection')->title('Коллекция'),
+            Input::make('alt')->title((string) __('Alt-текст')),
+            Input::make('title')->title((string) __('Заголовок')),
+            Textarea::make('description')->title((string) __('Описание')),
+            TagsInput::make('tags')->title((string) __('Теги')),
+            Input::make('collection')->title((string) __('Коллекция')),
         ];
     }
 
@@ -74,12 +74,12 @@ final class MediaResource extends Resource
     public function filters(): array
     {
         return [
-            InputFilter::for('collection')->label('Коллекция'),
-            InputFilter::for('mime')->label('MIME (substring)'),
-            OptionsFilter::for('mime_kind')->label('Тип')->options([
-                'image/' => 'Изображения',
-                'video/' => 'Видео',
-                'audio/' => 'Аудио',
+            InputFilter::for('collection')->label((string) __('Коллекция')),
+            InputFilter::for('mime')->label((string) __('MIME (подстрока)')),
+            OptionsFilter::for('mime_kind')->label((string) __('Тип'))->options([
+                'image/' => (string) __('Изображения'),
+                'video/' => (string) __('Видео'),
+                'audio/' => (string) __('Аудио'),
                 'application/pdf' => 'PDF',
             ]),
         ];

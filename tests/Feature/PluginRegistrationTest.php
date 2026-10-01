@@ -47,4 +47,17 @@ final class PluginRegistrationTest extends TestCase
         $r = $this->postJson('/api/admin/media/upload');
         $this->assertNotSame(404, $r->status());
     }
+
+    public function test_version_is_resolved_from_composer(): void
+    {
+        $this->assertNotSame('', (new AdminMediaPlugin)->version());
+        $this->assertNotSame('0.1.0', (new AdminMediaPlugin)->version());
+    }
+
+    public function test_english_translations_loaded(): void
+    {
+        app()->setLocale('en');
+        $this->assertSame('Media library', __('Медиа-библиотека'));
+        $this->assertSame('Media library', MediaResource::label());
+    }
 }

@@ -1,0 +1,19 @@
+{
+    "Alt-текст": "Alt text",
+    "MIME (подстрока)": "MIME (substring)",
+    "Аудио": "Audio",
+    "Видео": "Video",
+    "Загрузка": "Upload",
+    "Заголовок": "Title",
+    "Изображения": "Images",
+    "Коллекция": "Collection",
+    "Медиа": "Media",
+    "Медиа-библиотека": "Media library",
+    "Описание": "Description",
+    "Просмотр библиотеки": "View library",
+    "Редактирование (alt, title, focal)": "Edit (alt, title, focal)",
+    "Теги": "Tags",
+    "Тип": "Type",
+    "Удаление": "Delete",
+    "Управление коллекциями": "Manage collections"
+}
