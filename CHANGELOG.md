@@ -8,7 +8,7 @@ and this project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 Entries for releases published before this file existed were reconstructed from
 the tagged commit history.
 
-## [Unreleased]
+## [1.5.2] — 2026-10-02
 
 ### Fixed
 - The media library table had column headers made from the column names
