@@ -8,6 +8,15 @@ and this project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 Entries for releases published before this file existed were reconstructed from
 the tagged commit history.
 
+## [Unreleased]
+
+### Fixed
+- A cropped variant (`'crop' => true` in a responsive set) threw a `TypeError`
+  when the media had no focal point: right after `MediaService::upload()` the
+  model does not carry the column defaults yet, and a host may store `null`.
+  `ImageProcessor::cropToBox()` now takes `?float` focal coordinates, treats
+  `null` as the centre and clamps values outside `[0, 1]`.
+
 ## [1.5.0] — 2026-10-02
 
 ### Added

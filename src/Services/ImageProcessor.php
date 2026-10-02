@@ -96,18 +96,22 @@ final class ImageProcessor
      *
      * The window is chosen so that the focal point stays inside after the crop
      * to $width × $height. When the focal point is too close to an edge, the
-     * window is pressed against it.
+     * window is pressed against it. No focal point (null) means the centre; a
+     * value outside [0, 1] is clamped.
      */
     public function cropToBox(
         string $sourcePath,
         string $targetPath,
         int $width,
         int $height,
-        float $fx = 0.5,
-        float $fy = 0.5,
+        ?float $fx = 0.5,
+        ?float $fy = 0.5,
         ?string $format = null,
         int $quality = 85,
     ): bool {
+        $fx = max(0.0, min(1.0, $fx ?? 0.5));
+        $fy = max(0.0, min(1.0, $fy ?? 0.5));
+
         $info = $this->info($sourcePath);
         if ($info === null || ! in_array($info['mime'], self::SUPPORTED_INPUT, true)) {
             return false;
