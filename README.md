@@ -2,7 +2,7 @@
 
 > 🌐 **English** · [Русский](docs/ru/README.md) · [Deutsch](docs/de/README.md) · [中文](docs/zh/README.md)
 
-Extended media library: collections, tags, focal-point, responsive variants, EXIF stripping. No spatie/medialibrary dependency.
+Extended media library: collections, tags, focal-point, responsive variants, EXIF stripping, and a `MediaPicker` form field. No spatie/medialibrary dependency.
 
 A sister-pack for [`dskripchenko/laravel-admin`](https://github.com/dskripchenko/laravel-admin).
 
@@ -22,6 +22,18 @@ config:
 ```bash
 php artisan vendor:publish --tag=admin-media-config
 ```
+
+## Picking media in forms
+
+```php
+use Dskripchenko\LaravelAdminMedia\Fields\MediaPicker;
+
+MediaPicker::make('cover_id')->images()->collection('articles');
+MediaPicker::make('gallery')->images()->multiple()->maxItems(12);
+```
+
+A dialog with thumbnails, search, filters, pagination and upload, built on the
+core's `ResourcePicker`. See [Usage](docs/en/usage.md#picking-media-in-resource-forms).
 
 ## Documentation
 

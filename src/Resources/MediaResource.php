@@ -8,11 +8,14 @@ use Dskripchenko\LaravelAdmin\Field\Input;
 use Dskripchenko\LaravelAdmin\Field\TagsInput;
 use Dskripchenko\LaravelAdmin\Field\Textarea;
 use Dskripchenko\LaravelAdmin\Filter\InputFilter;
-use Dskripchenko\LaravelAdmin\Filter\OptionsFilter;
 use Dskripchenko\LaravelAdmin\Resource\Resource;
 use Dskripchenko\LaravelAdmin\Table\TableColumn;
+use Dskripchenko\LaravelAdminMedia\Filters\CollectionFilter;
+use Dskripchenko\LaravelAdminMedia\Filters\MimeKindFilter;
 use Dskripchenko\LaravelAdminMedia\Models\Media;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 /**
  * The browse page of the media library.
@@ -74,9 +77,9 @@ final class MediaResource extends Resource
     public function filters(): array
     {
         return [
-            InputFilter::for('collection')->label((string) __('Коллекция')),
+            CollectionFilter::for('collection')->label((string) __('Коллекция')),
             InputFilter::for('mime')->label((string) __('MIME (подстрока)')),
-            OptionsFilter::for('mime_kind')->label((string) __('Тип'))->options([
+            MimeKindFilter::for('mime_kind')->label((string) __('Тип'))->options([
                 'image/' => (string) __('Изображения'),
                 'video/' => (string) __('Видео'),
                 'audio/' => (string) __('Аудио'),
@@ -92,6 +95,58 @@ final class MediaResource extends Resource
 
     public function indexQuery(): Builder
     {
-        return $this->modelQuery()->orderByDesc('created_at');
+        // The variants come along for the picker's thumbnails.
+        return $this->modelQuery()->with('variants')->orderByDesc('created_at');
+    }
+
+    /**
+     * The title, the alt text, or the file name.
+     */
+    public function recordTitle(Model $row): string
+    {
+        if (! $row instanceof Media) {
+            return parent::recordTitle($row);
+        }
+        foreach ([$row->title, $row->alt] as $value) {
+            if (is_string($value) && $value !== '') {
+                return $value;
+            }
+        }
+
+        return basename($row->path);
+    }
+
+    /**
+     * The MIME type, with the dimensions of an image.
+     */
+    public function recordSubtitle(Model $row): ?string
+    {
+        if (! $row instanceof Media) {
+            return parent::recordSubtitle($row);
+        }
+        $parts = [$row->mime];
+        if ($row->width !== null && $row->height !== null) {
+            $parts[] = $row->width.'×'.$row->height;
+        }
+
+        return implode(' · ', $parts);
+    }
+
+    /**
+     * Images preview through their smallest variant, falling back to the
+     * original; other files have no preview.
+     */
+    public function pickerPreview(Model $row): ?string
+    {
+        if (! $row instanceof Media || $row->kind !== 'image') {
+            return null;
+        }
+        $thumb = $row->variant('thumb') ?? $row->variants->sortBy('width')->first();
+
+        // The variant lives on the original's disk; resolving it here spares
+        // MediaVariant::$url a query for its parent per row.
+        return $thumb !== null
+            ? (string) Storage::disk($row->disk)->url($thumb->path)
+            : $row->url;
     }
 }
