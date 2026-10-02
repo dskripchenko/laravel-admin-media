@@ -62,15 +62,15 @@ final class MediaResource extends Resource
     public function columns(): array
     {
         return [
-            TableColumn::make('id')->sort()->width('60px'),
-            TableColumn::make('path')->copyable()->search(),
-            TableColumn::make('mime')->sort()->asBadge([]),
-            TableColumn::make('collection')->sort()->asBadge([]),
-            TableColumn::make('size')->sort()->align('right')->asBytes(),
-            TableColumn::make('width')->align('right'),
-            TableColumn::make('height')->align('right'),
-            TableColumn::make('alt')->search(),
-            TableColumn::make('created_at')->sort()->asDateTime(),
+            TableColumn::make('id')->label((string) __('ID'))->sort()->width('60px'),
+            TableColumn::make('path')->label((string) __('Путь'))->copyable()->search(),
+            TableColumn::make('mime')->label((string) __('Тип'))->sort()->asBadge([]),
+            TableColumn::make('collection')->label((string) __('Коллекция'))->sort()->asBadge([]),
+            TableColumn::make('size')->label((string) __('Размер'))->sort()->align('right')->asBytes(),
+            TableColumn::make('width')->label((string) __('Ширина'))->align('right'),
+            TableColumn::make('height')->label((string) __('Высота'))->align('right'),
+            TableColumn::make('alt')->label((string) __('Alt-текст'))->search(),
+            TableColumn::make('created_at')->label((string) __('Создано'))->sort()->asDateTime(),
         ];
     }
 
