@@ -44,7 +44,7 @@ final class PluginRegistrationTest extends TestCase
 
     public function test_upload_endpoint_registered(): void
     {
-        $r = $this->postJson('/api/admin/media/upload');
+        $r = $this->postJson('/api/admin/media/library/upload');
         $this->assertNotSame(404, $r->status());
     }
 

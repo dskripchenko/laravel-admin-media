@@ -8,6 +8,33 @@ and this project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 Entries for releases published before this file existed were reconstructed from
 the tagged commit history.
 
+## [Unreleased]
+
+### Added
+- `Fields\MediaPicker` — a form field that picks files from the library in a
+  dialog with thumbnails, search, filters, pagination and upload; a preset of
+  the core's `ResourcePicker` with `images()`, `collection()`, `mime()`,
+  `responsiveSet()`, `withoutUpload()`, `multiple()` and `maxItems()`.
+- `MediaResource` describes its records for pickers and global search: the
+  title (title, alt or file name), the MIME type with the image dimensions, and
+  a thumbnail preview (the `thumb` variant, the smallest variant or the
+  original image).
+
+### Changed
+- Requires `dskripchenko/laravel-admin` ^1.34 (the release with `ResourcePicker`).
+- The collection filter matches the collection name exactly (`articles` no
+  longer also lists `articles-archive`).
+- The media list loads the variants with the records.
+
+### Fixed
+- The upload endpoint is now `POST /api/admin/media/library/upload`. The old
+  `media/upload` path has the same shape as laravel-api's generic
+  `api/{version}/{controller}/{action}` route, which is registered first, so in
+  a real host it answered 404 "The requested method was not found". The old
+  path is still registered.
+- The "Type" filter (`mime_kind`) queried a column that does not exist; it now
+  matches the start of the MIME type.
+
 ## [1.4.0] — 2026-10-01
 
 ### Changed

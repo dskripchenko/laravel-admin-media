@@ -10,7 +10,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 /**
- * POST /api/admin/media/upload
+ * POST /api/admin/media/library/upload
  *
  * Form-data:
  *   - file (required, single file)
