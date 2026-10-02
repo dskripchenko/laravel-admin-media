@@ -8,6 +8,13 @@ and this project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 Entries for releases published before this file existed were reconstructed from
 the tagged commit history.
 
+## [Unreleased]
+
+### Fixed
+- The media library table had column headers made from the column names
+  ("Path", "Mime", "Created at"…), English in every panel language. Every
+  column now carries a label, a source string translated per request.
+
 ## [1.5.1] — 2026-10-02
 
 ### Fixed

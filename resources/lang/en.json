@@ -15,5 +15,10 @@
     "Теги": "Tags",
     "Тип": "Type",
     "Удаление": "Delete",
-    "Управление коллекциями": "Manage collections"
+    "Управление коллекциями": "Manage collections",
+    "Путь": "Path",
+    "Размер": "Size",
+    "Ширина": "Width",
+    "Высота": "Height",
+    "Создано": "Created"
 }

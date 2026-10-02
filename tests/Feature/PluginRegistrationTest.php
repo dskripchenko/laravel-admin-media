@@ -60,4 +60,25 @@ final class PluginRegistrationTest extends TestCase
         $this->assertSame('Media library', __('Медиа-библиотека'));
         $this->assertSame('Media library', MediaResource::label());
     }
+
+    public function test_every_column_has_a_label_in_the_panel_language(): void
+    {
+        foreach (['ru' => ['created_at' => 'Создано', 'path' => 'Путь'], 'en' => ['created_at' => 'Created', 'path' => 'Path']] as $locale => $expected) {
+            app()->setLocale($locale);
+            $labels = [];
+            foreach ((new MediaResource)->columns() as $column) {
+                $arr = $column->toArray();
+                $labels[$arr['name']] = $arr['label'];
+            }
+            foreach ($expected as $name => $label) {
+                $this->assertSame($label, $labels[$name], "{$locale}: {$name}");
+            }
+            if ($locale === 'ru') {
+                // A label made from the column name ("Created at") would be English here.
+                foreach ($labels as $name => $label) {
+                    $this->assertMatchesRegularExpression('/\p{Cyrillic}|^ID$/u', $label, $name);
+                }
+            }
+        }
+    }
 }
