@@ -21,7 +21,7 @@ the tagged commit history.
   original image).
 
 ### Changed
-- Requires `dskripchenko/laravel-admin` ^1.34 (the release with `ResourcePicker`).
+- Requires `dskripchenko/laravel-admin` ^1.36 (the release with `ResourcePicker`).
 - The collection filter matches the collection name exactly (`articles` no
   longer also lists `articles-archive`).
 - The media list loads the variants with the records.

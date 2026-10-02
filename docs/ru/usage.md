@@ -13,7 +13,7 @@ translated_from: ../en/usage.md
 
 `MediaPicker` — поле для выбора файлов библиотеки в диалоге с превью, поиском,
 фильтрами и пагинацией. Это пресет `ResourcePicker` из ядра
-(dskripchenko/laravel-admin 1.34 и новее):
+(dskripchenko/laravel-admin 1.36 и новее):
 
 ```php
 use Dskripchenko\LaravelAdminMedia\Fields\MediaPicker;

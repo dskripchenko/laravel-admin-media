@@ -30,7 +30,7 @@ To disable EXIF stripping (for documents):
 
 `MediaPicker` lets a form pick files from the library in a dialog with
 thumbnails, search, filters and pagination. It is a preset of the core's
-`ResourcePicker` (dskripchenko/laravel-admin 1.34 or later):
+`ResourcePicker` (dskripchenko/laravel-admin 1.36 or later):
 
 ```php
 use Dskripchenko\LaravelAdminMedia\Fields\MediaPicker;
