@@ -48,6 +48,15 @@ final class MediaResource extends Resource
         return (string) __('Медиа-библиотека');
     }
 
+    /**
+     * One record's name, for the panel's titles, confirmations and toasts
+     * ("Create file"). A core without singularLabel() ignores it.
+     */
+    public static function singularLabel(): string
+    {
+        return (string) __('файл');
+    }
+
     public function fields(): array
     {
         return [

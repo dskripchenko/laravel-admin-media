@@ -8,6 +8,15 @@ and this project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 Entries for releases published before this file existed were reconstructed from
 the tagged commit history.
 
+## [Unreleased]
+
+### Added
+
+- `singularLabel()` on the pack's resources ("file", with Russian source
+  strings and English translations), so a laravel-admin core that supports
+  it titles their pages "Create file" instead of gluing the plural
+  label. An older core ignores the method; the core constraint is unchanged.
+
 ## [1.5.2] — 2026-10-02
 
 ### Fixed
