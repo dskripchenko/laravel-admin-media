@@ -49,6 +49,10 @@ final class MediaService
 
         $info = $this->images->info($file->getRealPath());
 
+        // Without a title the original file name is the only human name the
+        // file ever had; downloads and lists need it.
+        $extraAttributes += ['title' => $file->getClientOriginalName()];
+
         /** @var Media $media */
         $media = Media::query()->create(array_merge([
             'disk' => $disk,
