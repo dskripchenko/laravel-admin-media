@@ -82,12 +82,34 @@ final class MediaService
             return 0;
         }
 
+        // Through temporary files, so that any disk works — S3 has no local path.
         $disk = Storage::disk($media->disk);
-        $sourcePath = $disk->path($media->path);
-        if (! is_file($sourcePath)) {
+        $source = $disk->readStream($media->path);
+        if (! is_resource($source)) {
             return 0;
         }
+        $sourcePath = (string) tempnam(sys_get_temp_dir(), 'media');
+        $copy = fopen($sourcePath, 'wb');
+        if ($copy === false) {
+            return 0;
+        }
+        stream_copy_to_stream($source, $copy);
+        fclose($copy);
+        fclose($source);
 
+        try {
+            return $this->variantsFrom($media, $sourcePath, $set);
+        } finally {
+            @unlink($sourcePath);
+        }
+    }
+
+    /**
+     * @param  list<array<string, mixed>>  $set
+     */
+    private function variantsFrom(Media $media, string $sourcePath, array $set): int
+    {
+        $disk = Storage::disk($media->disk);
         $created = 0;
         foreach ($set as $variantSpec) {
             $name = (string) ($variantSpec['name'] ?? '');
@@ -102,7 +124,7 @@ final class MediaService
             }
 
             $variantPath = dirname($media->path).'/'.pathinfo($media->path, PATHINFO_FILENAME).".$name.".($format ?? 'jpg');
-            $variantFsPath = $disk->path($variantPath);
+            $variantFsPath = (string) tempnam(sys_get_temp_dir(), 'variant');
 
             $ok = $crop && $width !== null && $height !== null
                 ? $this->images->cropToBox(
@@ -111,11 +133,17 @@ final class MediaService
                 )
                 : $this->images->resize($sourcePath, $variantFsPath, $width, $height, $format, $quality);
 
-            if (! $ok) {
+            $info = $ok ? $this->images->info($variantFsPath) : null;
+            $size = $ok ? (@filesize($variantFsPath) ?: 0) : 0;
+            $stream = $ok ? fopen($variantFsPath, 'rb') : false;
+            $stored = $stream !== false && $disk->writeStream($variantPath, $stream);
+            if (is_resource($stream)) {
+                fclose($stream);
+            }
+            @unlink($variantFsPath);
+            if (! $stored) {
                 continue;
             }
-
-            $info = $this->images->info($variantFsPath);
 
             MediaVariant::query()->updateOrCreate(
                 ['media_id' => $media->id, 'name' => $name],
@@ -124,7 +152,7 @@ final class MediaService
                     'width' => $info['width'] ?? null,
                     'height' => $info['height'] ?? null,
                     'mime' => $info['mime'] ?? 'application/octet-stream',
-                    'size' => @filesize($variantFsPath) ?: 0,
+                    'size' => $size,
                     'format' => $format,
                 ],
             );
