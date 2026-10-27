@@ -16,6 +16,12 @@ the tagged commit history.
   The stored file gets a random name, so the original one was lost; lists and
   downloads had nothing human to show. A given title still wins.
 
+### Fixed
+- **Responsive variants failed on a disk without local paths (S3, MinIO).**
+  They were built through `$disk->path()`; now through temporary files, so any
+  disk works.
+
+
 ## [1.5.3] — 2026-10-03
 
 ### Added
