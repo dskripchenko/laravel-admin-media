@@ -9,8 +9,7 @@ Entries for releases published before this file existed were reconstructed from
 the tagged commit history.
 
 
-## [Unreleased]
-
+## [1.6.0] — 2026-10-27
 ### Added
 - **Scanning of uploads** before they are stored: `Contracts\UploadScanner`,
   a dependency-free ClamAV client (`ClamdScanner`, INSTREAM over TCP or a unix
