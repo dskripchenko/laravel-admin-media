@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Dskripchenko\LaravelAdminMedia\Http\Controllers;
 
+use Dskripchenko\LaravelAdminMedia\Exceptions\InfectedUpload;
+use Dskripchenko\LaravelAdminMedia\Exceptions\ScannerUnavailable;
 use Dskripchenko\LaravelAdminMedia\Services\MediaService;
 use Dskripchenko\LaravelApi\Controllers\ApiController;
 use Illuminate\Http\JsonResponse;
@@ -75,12 +77,24 @@ final class UploadController extends ApiController
             'uploader_id' => $request->user()?->getKey(),
         ], fn ($v) => $v !== null);
 
-        $media = $this->service->upload(
-            $file,
-            $data['collection'] ?? null,
-            $data['responsive_set'] ?? null,
-            $extra,
-        );
+        try {
+            $media = $this->service->upload(
+                $file,
+                $data['collection'] ?? null,
+                $data['responsive_set'] ?? null,
+                $extra,
+            );
+        } catch (InfectedUpload $e) {
+            return $this->error([
+                'errorKey' => 'infected',
+                'message' => __('Файл отклонён антивирусом: :threat', ['threat' => $e->threat]),
+            ], 422);
+        } catch (ScannerUnavailable) {
+            return $this->error([
+                'errorKey' => 'scanner_unavailable',
+                'message' => __('Файл не удалось проверить антивирусом, попробуйте позже'),
+            ], 503);
+        }
 
         return $this->success(['media' => $media->loadMissing('variants')->toArray()]);
     }

@@ -21,5 +21,7 @@
     "Ширина": "Width",
     "Высота": "Height",
     "Создано": "Created",
-    "файл": "file"
+    "файл": "file",
+    "Файл отклонён антивирусом: :threat": "The file was refused by the antivirus: :threat",
+    "Файл не удалось проверить антивирусом, попробуйте позже": "The file could not be scanned by the antivirus; try again later"
 }

@@ -15,6 +15,19 @@ return [
 
     'max_size_mb' => 50,
 
+    // Scanning of uploads before they are stored. `none`, or `clamd` — a
+    // ClamAV daemon at `address` (tcp://host:3310 or unix:///run/clamav/clamd.ctl).
+    // When the scanner cannot answer: `reject` the upload (safe) or `allow` it
+    // unscanned with a warning in the log.
+    'scanning' => [
+        'driver' => env('ADMIN_MEDIA_SCANNER', 'none'),
+        'clamd' => [
+            'address' => env('ADMIN_MEDIA_CLAMD', 'tcp://127.0.0.1:3310'),
+            'timeout' => (float) env('ADMIN_MEDIA_CLAMD_TIMEOUT', 30),
+        ],
+        'on_error' => env('ADMIN_MEDIA_SCAN_ON_ERROR', 'reject'),
+    ],
+
     'collections' => [
         'default' => ['label' => 'Общая'],
         'articles' => ['label' => 'Статьи'],

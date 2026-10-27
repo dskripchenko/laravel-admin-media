@@ -34,3 +34,31 @@ MediaPicker::make('attachment_id')->mime('application/pdf')->withoutUpload(),
 пользователем (колонку приводите к `array`). При сохранении каждый id
 проверяется по библиотеке. Диалог требует `admin.media.view`, кнопка загрузки —
 `admin.media.upload`.
+
+
+## Проверка загрузок
+
+Каждую загрузку можно проверить до сохранения. В пакете есть клиент демона
+ClamAV (`clamd`) — без зависимостей, протокол INSTREAM через TCP или
+unix-сокет:
+
+```dotenv
+ADMIN_MEDIA_SCANNER=clamd
+ADMIN_MEDIA_CLAMD=tcp://127.0.0.1:3310      # или unix:///run/clamav/clamd.ctl
+ADMIN_MEDIA_CLAMD_TIMEOUT=30
+ADMIN_MEDIA_SCAN_ON_ERROR=reject            # или allow
+```
+
+- Файл с угрозой не сохраняется: `MediaService::upload()` бросает
+  `InfectedUpload` (с `$threat`), эндпоинт загрузки отвечает 422
+  (`errorKey: infected`).
+- Если демон не может ответить, `reject` (по умолчанию) отклоняет файл —
+  `ScannerUnavailable`, 503 (`scanner_unavailable`); `allow` сохраняет его и
+  пишет предупреждение в журнал.
+- Оба отказа порождают событие `UploadRefused` (имя файла, угроза, кто
+  загружал, причина) — для журнала аудита или уведомления.
+- `StreamMaxLength` у clamd держите не меньше `max_size_mb`, иначе большие
+  файлы отклоняются как непроверяемые.
+
+Свой сканер реализует `Contracts\UploadScanner` и регистрируется в
+контейнере вместо настроенного.

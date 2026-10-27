@@ -63,3 +63,31 @@ with their thumbnails.
 The thumbnail is the `thumb` variant, or the smallest one, or the original
 image; other files show a placeholder. The library itself can be the target of
 a plain `ResourcePicker` too: `ResourcePicker::make('logo_id')->resource('media-library')`.
+
+
+## Scanning uploads
+
+Every upload can be scanned before it is stored. The package ships a client
+for a ClamAV daemon (`clamd`) — no dependencies, its INSTREAM protocol over a
+TCP or unix socket:
+
+```dotenv
+ADMIN_MEDIA_SCANNER=clamd
+ADMIN_MEDIA_CLAMD=tcp://127.0.0.1:3310      # or unix:///run/clamav/clamd.ctl
+ADMIN_MEDIA_CLAMD_TIMEOUT=30
+ADMIN_MEDIA_SCAN_ON_ERROR=reject            # or allow
+```
+
+- A file with a threat is not stored: `MediaService::upload()` throws
+  `InfectedUpload` (with `$threat`), the upload endpoint answers 422
+  (`errorKey: infected`).
+- When the daemon cannot answer, `reject` (the default) refuses the file —
+  `ScannerUnavailable`, 503 (`scanner_unavailable`); `allow` stores it and
+  logs a warning.
+- Both refusals fire `UploadRefused` (file name, threat, uploader, reason) for
+  an audit log or a notification.
+- Keep clamd's `StreamMaxLength` at least `max_size_mb`, or larger files are
+  refused as unscannable.
+
+Your own scanner implements `Contracts\UploadScanner` and is bound in the
+container in place of the configured one.

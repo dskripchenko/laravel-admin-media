@@ -8,6 +8,28 @@ and this project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 Entries for releases published before this file existed were reconstructed from
 the tagged commit history.
 
+
+## [Unreleased]
+
+### Added
+- **Scanning of uploads** before they are stored: `Contracts\UploadScanner`,
+  a dependency-free ClamAV client (`ClamdScanner`, INSTREAM over TCP or a unix
+  socket), `scanning.*` config (`ADMIN_MEDIA_SCANNER=clamd`). A threat refuses
+  the upload (`InfectedUpload`, 422 `infected`); an unreachable scanner
+  refuses it by default (`ScannerUnavailable`, 503) or lets it through with
+  `on_error=allow`. `UploadRefused` is fired for both.
+
+### Changed
+- **An upload without a title keeps the original file name as its title.**
+  The stored file gets a random name, so the original one was lost; lists and
+  downloads had nothing human to show. A given title still wins.
+
+### Fixed
+- **Responsive variants failed on a disk without local paths (S3, MinIO).**
+  They were built through `$disk->path()`; now through temporary files, so any
+  disk works.
+
+
 ## [1.5.3] — 2026-10-03
 
 ### Added
