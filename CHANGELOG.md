@@ -11,6 +11,14 @@ the tagged commit history.
 
 ## [Unreleased]
 
+### Added
+- **Scanning of uploads** before they are stored: `Contracts\UploadScanner`,
+  a dependency-free ClamAV client (`ClamdScanner`, INSTREAM over TCP or a unix
+  socket), `scanning.*` config (`ADMIN_MEDIA_SCANNER=clamd`). A threat refuses
+  the upload (`InfectedUpload`, 422 `infected`); an unreachable scanner
+  refuses it by default (`ScannerUnavailable`, 503) or lets it through with
+  `on_error=allow`. `UploadRefused` is fired for both.
+
 ### Changed
 - **An upload without a title keeps the original file name as its title.**
   The stored file gets a random name, so the original one was lost; lists and
